@@ -3,7 +3,7 @@
 An Instagram clone built with Django. 
 
 ### Demo
-[Instagram Clone]()]
+[Instagram Clone]()
 
 ### Author
 [Florence Kotohoyoh](https://github.com/Flokots)
