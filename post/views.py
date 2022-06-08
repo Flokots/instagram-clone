@@ -1,4 +1,4 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 
 from django.contrib.auth.decorators import login_required
 
@@ -47,3 +47,8 @@ def newPost(request):
     
     return render(request, 'newpost.html', {'form': form})
 
+
+def postDetail(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+
+    return render(request, 'post_details.html', {'post': post})
