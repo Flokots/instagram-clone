@@ -47,3 +47,8 @@ class Post(models.Model):
     
     def __str__(self):
         return self.name
+
+
+class Follow(models.Models):
+    follower = models.ForeignKey(User, on_delete=models.CASCADE, related_name='follower')
+    following = models.ForeignKey(User, on_delete=models.CASCADE, related_name='following')
