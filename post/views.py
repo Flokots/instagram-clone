@@ -52,3 +52,11 @@ def postDetail(request, post_id):
     post = get_object_or_404(Post, id=post_id)
 
     return render(request, 'postdetail.html', {'post': post})
+
+
+def tags(request, tag_slug):
+    tag = get_object_or_404(Tag, slug=tag_slug)
+    posts = Post.objects.filter(tag=tag).order_by('-posted')
+
+    
+    return render(request, 'tags.html', {'posts': posts})
