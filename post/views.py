@@ -26,17 +26,17 @@ def newPost(request):
         form = NewPostForm(request.POST, request.FILES)
 
         if form.is_valid():
-            image = form.cleaned_data('image')
-            caption = form.cleaned_data('caption')
-            tag_form = form.cleaned_data('tag')
-            tags_list = list(tag_form.spli(','))
+            image = form.cleaned_data.get('image')
+            caption = form.cleaned_data.get('caption')
+            tag_form = form.cleaned_data.get('tag')
+            tag_list = list(tag_form.split(','))
 
-            for tag in tags_list:
+            for tag in tag_list:
                 t, created = Tag.objects.get_or_create(title=tag)
                 tags_objs.append(t)
             
-            p, created = Post.objects.get_or_create(image=image, caption=caption, user_id=user)
-            p.tags_list.set(tags_objs)
+            p, created = Post.objects.get_or_create(image=image, caption=caption, user_id=user.id)
+            p.tag.set(tags_objs)
             p.save()
 
             return redirect('index')
