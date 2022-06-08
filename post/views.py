@@ -59,4 +59,4 @@ def tags(request, tag_slug):
     posts = Post.objects.filter(tag=tag).order_by('-posted')
 
 
-    return render(request, 'tag.html', {'posts': posts})
+    return render(request, 'tags.html', {'posts': posts, 'tag': tag})
