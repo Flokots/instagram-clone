@@ -71,10 +71,10 @@ def like(request, post_id):
     liked = Likes.objects.filter(user=user, post=post).count()
 
     if not liked:
-        Likes.objects.create(user=user, post=post)
+        liked = Likes.objects.create(user=user, post=post)
         current_likes = current_likes + 1
     else:
-        Likes.objects.filter(user=user, post=post).delete()
+        liked = Likes.objects.filter(user=user, post=post).delete()
         current_likes = current_likes - 1
         
     post.likes = current_likes
