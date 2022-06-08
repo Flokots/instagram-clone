@@ -49,7 +49,7 @@ class Post(models.Model):
         return self.name
 
 
-class Follow(models.Models):
+class Follow(models.Model):
     follower = models.ForeignKey(User, on_delete=models.CASCADE, related_name='follower')
     following = models.ForeignKey(User, on_delete=models.CASCADE, related_name='following')
 
