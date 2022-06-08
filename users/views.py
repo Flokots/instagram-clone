@@ -6,6 +6,7 @@ from django.contrib import messages
 def register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
+        form.save() 
         if form.is_valid():
             username = form.cleaned_data.get('username')
             messages.success(request, f'Account created for {username}!')
