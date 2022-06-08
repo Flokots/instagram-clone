@@ -1,9 +1,11 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render, get_object_or_404
 
 from django.contrib.auth.decorators import login_required
+from django.urls import reverse
 
 from .forms import NewPostForm
-from .models import Tag, Stream, Follow, Post
+from .models import Tag, Stream, Follow, Post, Likes
 
 def index(request):
     user = request.user
@@ -60,3 +62,22 @@ def tags(request, tag_slug):
 
 
     return render(request, 'tags.html', {'posts': posts, 'tag': tag})
+
+
+def like(request, post_id):
+    user = request.user
+    post = Post.objects.get(post_id=post_id)
+    current_likes = post.likes
+    liked = Likes.objects.filter(user=user, post=post).count()
+
+    if not liked:
+        Likes.objects.create(user=user, post=post)
+        current_likes = current_likes + 1
+    else:
+        Likes.objects.filter(user=user, post=post).delete()
+        current_likes = current_likes - 1
+
+        post.likes = current_likes
+        post.save()
+
+        return HttpResponseRedirect(reverse('post-details', args=[post_id]))
