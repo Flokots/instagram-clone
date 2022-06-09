@@ -1,3 +1,5 @@
+from cmath import log
+import logging
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render, get_object_or_404
 
@@ -7,6 +9,8 @@ from django.urls import reverse
 from .forms import NewPostForm
 from .models import Tag, Stream, Follow, Post, Likes
 
+
+@login_required
 def index(request):
     user = request.user
     posts = Stream.objects.filter(user=user)
@@ -19,7 +23,7 @@ def index(request):
     return render(request, 'index.html', {'post_items': post_items})
 
 
-
+@login_required
 def newPost(request):
     user = request.user
     tags_objs = []
@@ -63,7 +67,7 @@ def tags(request, tag_slug):
 
     return render(request, 'tags.html', {'posts': posts, 'tag': tag})
 
-
+@login_required
 def like(request, post_id):
     user = request.user
     post = Post.objects.get(id=post_id)
