@@ -44,4 +44,14 @@ def profile(request):
     }
     
     return render(request, 'users/profile.html', context)
-    
+
+
+@login_required
+def search_results(request):
+    if 'search_name' in request.GET and request.GET['search_name']:
+        search_name = request.GET.get('search_name')
+        searched_profiles = Profile.search_by_username(search_name)
+
+        message = f'{search_name}'
+
+        return render(request, 'index.html', {'message': message, 'profiles': searched_profiles})

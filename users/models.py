@@ -22,5 +22,12 @@ class Profile(models.Model):
             img.thumbnail = (output_size)
             img.save(self.image.path)
 
+    
+    @classmethod
+    def search_by_username(cls, search_name):
+        profiles = cls.objects.filter(user__icontains=search_name)
+
+        return profiles
+
 
 
