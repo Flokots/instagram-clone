@@ -4,6 +4,15 @@
 <main class="main-container">
     <section class="content-container">
         <div class="content">
+
+          {% if profiles %}
+          {%for profile in profiles %}
+          <div class="card">
+            <img src="{{ profile.image.url}}">
+            <p>{{profile.user.username}}</p>
+          </div>
+          {% endfor%}
+          {% endif %}
             <div class="stories">
                 <button class="stories__left-button">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -262,21 +271,15 @@
                         <h2>Suggestions for You</h2>
                         <button>See All</button>
                     </div>
-                    {% for user in all_users %}
-                    {% if request.user.username != user.username %}
+                    {% for profile in profiles %}
+                    {% if request.user.username != profile.username %}
                     <div class="side-menu__suggestion">
                         <a href="{% url 'profile' user %}" class="side-menu__suggestion-avatar">
-                            <img src="{{user.profile.image.url}}" alt="User Picture">
+                            <img src="{{profile.image.url}}" alt="User Picture">
                         </a>
 
                         <div class="side-menu__suggestion-info">
-                            {% if user.profile.first_name %}
-                            <a href="{% url 'profile' user %}">{{user.profile.first_name|title}}
-                                {{user.profile.last_name|title}}</a>
-                            {% else %}
                             <a href="{% url 'profile' user %}">{{user.username}}</a>
-                            {% endif %}
-                            <span>@{{user.username}}</span>
                         </div>
 
                         {% if follow_status == True %}

@@ -30,6 +30,18 @@ class Tag(models.Model):
             self.slug = slugify(self.title)
         return super().save(*args, **kwargs)
 
+    
+    def save_tag(self):
+        self.save()
+
+    def delete_tag(self):
+        self.delete()
+    
+    def update_tag(self):
+        Tag.objects.filter(pk=self.id).update(title="Tag")
+        self.save()
+
+
 
 class Post(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -48,12 +60,30 @@ class Post(models.Model):
     def __str__(self):
         return self.name
 
+    
+    def save_post(self):
+        self.save()
+
+    def delete_post(self):
+        self.delete()
+    
+    def update_post(self):
+        Post.objects.filter(pk=self.id).update(name="New Post")
+        self.save()
+
+
 class Likes(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_likes')
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_like')
 
- 
- 
+
+    def save_likes(self):
+        self.save()
+
+    def delete_likes(self):
+        self.delete()
+    
+
 class Follow(models.Model):
     follower = models.ForeignKey(User, on_delete=models.CASCADE, related_name='follower')
     following = models.ForeignKey(User, on_delete=models.CASCADE, related_name='following')
