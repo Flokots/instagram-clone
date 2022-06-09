@@ -143,7 +143,7 @@
                         <div class="profile-button__border"></div>
                         <a href="{% url 'profile' %}">
                             <div class="profile-button__picture">
-                                <img src="{% static 'assets/7.jpg' %}" alt="User Picture">
+                                <img src="{{ user.profile.image.url }}" alt="User Picture">
                             </div>
                         </a>
                     </button>
@@ -216,7 +216,7 @@
         <a href="" class="navbar__button profile-button">
             <div class="profile-button__border"></div>
             <div class="profile-button__picture">
-                <img src="{% static 'assets/7.jpg' %}" alt="User Picture">
+                <img src="{{ user.profile.image.url }}" alt="User Picture">
             </div>
         </a>
     </nav>
